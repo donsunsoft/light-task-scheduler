@@ -30,6 +30,18 @@ public class MysqlPreLoader extends AbstractPreLoader {
     }
 
     @Override
+    protected JobPo getJob(String taskTrackerNodeGroup, String jobId) {
+        return new SelectSql(sqlTemplate)
+                .select()
+                .all()
+                .from()
+                .table(getTableName(taskTrackerNodeGroup))
+                .where("job_id = ?", jobId)
+                .and("task_tracker_node_group = ?", taskTrackerNodeGroup)
+                .single(RshHolder.JOB_PO_RSH);
+    }
+
+    @Override
     protected boolean lockJob(String taskTrackerNodeGroup, String jobId,
                               String taskTrackerIdentity,
                               Long triggerTime,
@@ -64,8 +76,8 @@ public class MysqlPreLoader extends AbstractPreLoader {
                     .where("is_running = ?", false)
                     .and("trigger_time< ?", SystemClock.now())
                     .orderBy()
-                    .column("trigger_time", OrderByType.ASC)
                     .column("priority", OrderByType.ASC)
+                    .column("trigger_time", OrderByType.ASC)
                     .column("gmt_created", OrderByType.ASC)
                     .limit(0, loadSize)
                     .list(RshHolder.JOB_PO_LIST_RSH);

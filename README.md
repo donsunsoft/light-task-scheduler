@@ -17,6 +17,10 @@ oschina地址:
 
 这两个地址都会同步更新。感兴趣，请加QQ群：109500214 一起探讨、完善。越多人支持，就越有动力去更新，喜欢记得右上角star哈。
 
+##1.7.0-SNAPSHOT(master)变更主要点
+1. 增加手动触发任务按钮
+2. 优化PreLoader
+
 ## 框架概况
 LTS 有主要有以下四种节点：
 
@@ -61,7 +65,7 @@ LTS支持任务类型：
 
 ## LTS-Admin新版界面预览
 
-![LTS Admin](http://git.oschina.net/hugui/light-task-scheduler/raw/master/docs/LTS-Admin/LTS-Admin-cron-job-queue.png?dir=0&filepath=docs%2FLTS-Admin%2FLTS-Admin-cron-job-queue.png&oid=aecaf01bca5270a53b144891baaa3d7e56d47706&sha=9a38205065553f6e02fb27a01cb06eeb0e643486)
+![LTS Admin](http://git.oschina.net/hugui/light-task-scheduler/raw/master/docs/LTS-Admin/LTS-Admin-cron-job-queue.png?dir=0&filepath=docs%2FLTS-Admin%2FLTS-Admin-cron-job-queue.png&oid=aecaf01bca5270a53b144891baaa3d7e56d47706&sha=a4fd9f31df9e1fc6d389a16bdc8d1964bb854766)
 目前后台带有由[ztajy](https://github.com/ztajy)提供的一个简易的认证功能. 用户名密码在auth.cfg中,用户自行修改.
 
 ##特性
@@ -92,7 +96,7 @@ LTS框架提供四种执行结果支持，`EXECUTE_SUCCESS`，`EXECUTE_FAILED`�
 
 ##项目编译打包
 项目主要采用maven进行构建，目前提供shell脚本的打包。
-环境依赖：`Java(jdk1.7)` `Maven`
+环境依赖：`Java(jdk1.6+)` `Maven`
 
 用户使用一般分为两种：
 ###1、Maven构建

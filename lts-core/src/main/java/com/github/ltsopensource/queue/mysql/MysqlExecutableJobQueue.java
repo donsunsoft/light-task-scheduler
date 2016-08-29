@@ -53,6 +53,7 @@ public class MysqlExecutableJobQueue extends AbstractMysqlJobQueue implements Ex
     @Override
     public boolean add(JobPo jobPo) {
         try {
+            jobPo.setGmtModified(SystemClock.now());
             return super.add(getTableName(jobPo.getTaskTrackerNodeGroup()), jobPo);
         } catch (TableNotExistException e) {
             // 表不存在
@@ -73,6 +74,18 @@ public class MysqlExecutableJobQueue extends AbstractMysqlJobQueue implements Ex
     }
 
     @Override
+    public long countJob(String realTaskId, String taskTrackerNodeGroup) {
+        return (Long) new SelectSql(getSqlTemplate())
+                .select()
+                .columns("COUNT(1)")
+                .from()
+                .table(getTableName(taskTrackerNodeGroup))
+                .where("real_task_id = ?", realTaskId)
+                .and("task_tracker_node_group = ?", taskTrackerNodeGroup)
+                .single();
+    }
+
+    @Override
     public boolean removeBatch(String realTaskId, String taskTrackerNodeGroup) {
         new DeleteSql(getSqlTemplate())
                 .delete()
@@ -86,7 +99,6 @@ public class MysqlExecutableJobQueue extends AbstractMysqlJobQueue implements Ex
 
     @Override
     public void resume(JobPo jobPo) {
-
         new UpdateSql(getSqlTemplate())
                 .update()
                 .table(getTableName(jobPo.getTaskTrackerNodeGroup()))
